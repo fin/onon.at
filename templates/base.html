@@ -3,3 +3,5 @@
 {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/onon.css' %}" />
 {% endblock %}
+
+{% block brand %}{{block.super}} BETA{% endblock %}
