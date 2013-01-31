@@ -1,0 +1,5 @@
+{% overextends 'base.html' %}{% load static from staticfiles %}
+{% block head %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/onon.css' %}" />
+{% endblock %}
