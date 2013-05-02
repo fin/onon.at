@@ -4,4 +4,7 @@
 <link rel="stylesheet" href="{% static 'css/onon.css' %}" />
 {% endblock %}
 
-{% block brand %}{{block.super}} BETA{% endblock %}
+{% block footer %}
+  {{block.super}}
+    · <a href="http://blog.onon.at">Blog</a>
+{% endblock %}
