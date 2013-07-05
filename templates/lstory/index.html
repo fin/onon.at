@@ -1,0 +1,8 @@
+{% overextends 'lstory/index.html' %}{% load static from staticfiles %}
+{% block innercontent %}
+  <div class="story">
+    <div class="leadimage"><img src="http://agrar.onon.at/coverimage.png" /></div>
+    <h2><a href="http://agrar.onon.at">FEATURE: Förderwälder</a></h2>
+  </div>
+{{ block.super }}
+{% endblock %}
