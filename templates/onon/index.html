@@ -1,0 +1,73 @@
+{% extends 'base.html' %}{% load i18n markup %}
+{% block head %}
+<link rel="stylesheet" href="/static/css/smoothness/jquery-ui-1.10.3.custom.css" />
+{% endblock %}
+{% block bodyargs %}class="index"{% endblock %}
+{% block content %}
+<div id="header">
+    <h1>{{site.name}}</h1>
+</div>
+<div id="index">
+    <div class="inner">
+      {% block innercontent %}
+        {% for thing in timeline %}
+          {% if thing.editorial or thing.main_story %}
+            <div class="feature release">
+              <div class="editorial">
+                <h2 >{{thing.title}}</h2>
+              </div>
+              <div class="story" style="width: 45%; float: left;">
+                {% if thing.main_story.cover_image %}<div class="leadimage"><img alt="" src="{{thing.main_story.cover_image.url}}" /></div>{% endif %}
+                {% include 'lstory/_linkto.inc' with story=thing.main_story %}
+              </div>
+              <div class="secondary story" style="padding-left: 2.5%; width: 25%; float: left;">
+                <div class="leadimage"><img alt="" src="{% if thing.other_story.image.url %}{{thing.other_story.image.url}}{%else%}{{thing.other_story.image}}{%endif%}" /></div>
+                <h2><a href="{{thing.other_story.url}}" target="_new">{{thing.other_story.name}}</a>
+                  <span class="author">Zahltag</span>
+                </h2>
+              </div>
+              <div class="editorial story" style="padding-left: 2%;width: 25%; float: left;">
+                <div class="editorialintro">
+                  {{thing.editorial|markdown}}
+                </div>
+                <h2><a href="#" onclick="$(this).parents('.feature').find('.editorialintro').clone().dialog({modal: true, width: '500px', title: 'Editorial: '+$(this).parents('.feature').find('h2').first().text()}); return false;" >Editorial</a><span class="author">&nbsp;&nbsp;</span></h2>
+              </div>
+              <div style="clear: left;">
+                &nbsp;
+              </div>
+            </div>
+          {% else %}
+            <div class="story">
+              <div class="leadimage"><img src="{{thing.image}}" /></div>
+              <h2><a href="{{thing.url}}">{{thing.text}}</a></h2>
+            </div>
+          {% endif %}
+          <hr style="border: 1px solid black; margin-bottom: 2em;" />
+        {% endfor %}
+        {% if stories %}
+        {% if timeline %} <h2>Ältere Themen:</h2>{% endif %}
+        {% endif %}
+        {% for story in stories %}
+        <div class="story">
+            {% if story.cover_image %}<div class="leadimage"><img alt="" src="{{story.cover_image.url}}" /></div>{% endif %}
+            {% include 'lstory/_linkto.inc' %}
+        </div>
+        {% endfor %}
+
+        {% for story in retired %}
+            {% if forloop.first %}
+                <h2>{% trans 'Retired Stories' %}
+            {% endif %}
+            {% include 'lstory/_linkto.inc' with h='h4' %}
+        {% endfor %}
+      {% endblock %}
+    </div>
+</div>
+<div id="react">
+    <div class="inner">
+        {{flatcontent.content|default:""|markdown}}
+    </div>
+</div>
+<div id="sidebar">
+</div>
+{% endblock %}
